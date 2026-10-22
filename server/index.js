@@ -26,17 +26,18 @@ app.use(cors({
 // });
 
 // pg.Pool
-const db = process.env.DB_URL
-            ? new pg.Pool({
-                connectionString: process.env.DATABASE_URL,
-                ssl: { rejectUnauthorized: false }
-            })
-            : new pg.Pool({
-                host: "localhost",
-                user: "jsuser",
-                password: "pwjs",
-                database: "jsdb"
-            })
+const db = process.env.DATABASE_URL
+    ? new pg.Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false }
+    })
+    : new pg.Pool({
+        host: "localhost",
+        port: 5432,
+        user: "jsuser",
+        password: "pwjs",
+        database: "jsdb"
+    });
 
 // 쉬고 있는 연결에서 오류가 나도 서버가 종료되지 않도록 처리
 db.on("error", (err) => {
